@@ -9,7 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
  */
 public final class APPDBHelper extends SQLiteOpenHelper{
     private static String SQL_CREATE_USER = "create table if not exists user(\n" +
-            "mail vchar(100),\n" +
+            "mail vchar(100) primary key,\n" +
             "pwd vchar(1024),\n" +
             "name vchar(80),\n" +
             "gender int,\n" +
@@ -31,10 +31,11 @@ public final class APPDBHelper extends SQLiteOpenHelper{
             "endStationName vchar(50),\n" +
             "startTime vchar(50),\n" +
             "arriveTime vchar(50),\n" +
+            "startDate vchar(50),\n"+
             "seats integer,\n" +
             "price double \n" +
             ");";
-    private static String SQL_CREATE_ORDER = "create table if not exists order(\n" +
+    private static String SQL_CREATE_ORDER = "create table if not exists order1(\n" +
             "mail vchar(100) references user(mail),\n" +
             "orderNum vchar(80),\n" +
             "Contactid vchar(1000),\n" +
