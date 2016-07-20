@@ -125,4 +125,20 @@ public class User {
         if (affectedRows == 1)return 0;
         return 1;
     }
+
+    public void insertUser(User A)
+    {
+        String nullColumnHack = null;
+        ContentValues insertContent = new ContentValues();
+        insertContent.put("mail",A.mail);
+        insertContent.put("pwd",A.pwd);
+        insertContent.put("name",A.name);
+        insertContent.put("gender",A.gender);
+        insertContent.put("id",A.id);
+        insertContent.put("tel",A.tel);
+        SQLiteDatabase db = APH.getWritableDatabase();
+        long insertResult = db.insert(targetTable,nullColumnHack,insertContent);
+
+
+    }
 }
