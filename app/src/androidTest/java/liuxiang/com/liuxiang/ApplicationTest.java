@@ -5,7 +5,10 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.test.ApplicationTestCase;
 import android.util.Log;
 
+import java.util.List;
+
 import liuxiang.com.liuxiang.model.APPDBHelper;
+import liuxiang.com.liuxiang.model.Contact;
 import liuxiang.com.liuxiang.model.User;
 
 /**
@@ -34,13 +37,13 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
         Log.i("insert test","success");
     }
 
-    public void testValidate(){
+    public void testValidateUser(){
         User U = new User(getContext());
         int T = U.validate("deng","12456");
         Log.i("valid user",String.format("the result is : %d",T));
     }
 
-    public User testQuery(){
+    public User testQueryUser(){
         User res = new User(getContext());
         res = res.query("dong");
         Log.i("db query test",String.format("result:ID:%s,mail:%s,name:%s,pwd:%s,gender:%d,tel:%s",
@@ -51,5 +54,39 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
                 res.getGender(),
                 res.getTel()));
         return res;
+    }
+
+    public void testUpdateUser(){
+        User TEST = new User(getContext()).query("ai");
+        TEST.setName("艾米米");
+        TEST.update(TEST);
+        Log.i("updatedbtest","success");
+    }
+
+    public void testUpdateUserPwd(){
+        User U = new User(getContext());
+        U.UpdatePwd("ai","ai123456");
+    }
+
+    public void testContactQuery(){
+        Contact C = new Contact(getContext());
+        List<Contact> DongContact=  C.query("dong");
+        String formatString = "query result :mail:%s" +
+                "Cname:%s" +
+                "CCID:%s" +
+                "CPhone:%s" +
+                "Cstats:%d" +
+                "Cid:%d";
+        for (Contact element:DongContact
+             ) {
+
+            Log.i("queryContact",String.format(formatString,
+                    element.getMail(),
+                    element.getCname(),
+                    element.getCCID(),
+                    element.getCPhone(),
+                    element.getCstats(),
+                    element.getCid()));
+        }
     }
 }
