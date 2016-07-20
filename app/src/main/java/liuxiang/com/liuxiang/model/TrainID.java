@@ -1,5 +1,6 @@
 package liuxiang.com.liuxiang.model;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -122,5 +123,22 @@ public class TrainID {
             result.add(newTrainID);
         }
         return result;
+    }
+
+    public int reduceOne(int id){
+        ContentValues updateData = new ContentValues();
+        String whereClause = "id=?";
+        String[] whereArgs = new String[]{String.format("%d",id)};
+        SQLiteDatabase db = APH.getWritableDatabase();
+        Cursor queryCursor = db.query(targetTable,new String[]{"seats"},
+                whereClause,whereArgs,null,null,null);
+        int seats = 0;
+        if (queryCursor.moveToFirst()){seats = queryCursor.getInt(0);}
+        else{return 1;}
+        updateData.put("seats",seats - 1);
+        int affectedRows = db.update(targetTable,updateData,whereClause,whereArgs);
+        if (affectedRows == 1)return 0;
+        return 1;
+
     }
 }
